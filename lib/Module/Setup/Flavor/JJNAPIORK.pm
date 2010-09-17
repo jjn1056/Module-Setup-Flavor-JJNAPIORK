@@ -15,7 +15,7 @@ Module::Setup::Flavor::JJNAPIORK - How I use Module::Setup
 
 =head1 SYNOPSIS
 
-  module-setup App::My::New::Project JJNAPIORK
+    module-setup App::My::New::Project JJNAPIORK
 
 =head1 DESCRIPTION
 

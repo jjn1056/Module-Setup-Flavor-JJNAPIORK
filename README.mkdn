@@ -4,7 +4,7 @@ Module::Setup::Flavor::JJNAPIORK - How I use Module::Setup
 
 # SYNOPSIS
 
-  module-setup App::My::New::Project JJNAPIORK
+    module-setup App::My::New::Project JJNAPIORK
 
 # DESCRIPTION
 

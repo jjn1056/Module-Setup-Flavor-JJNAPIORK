@@ -8,7 +8,7 @@ our $VERSION = '0.01';
 
 1;
 
-=head1 TITLE
+=head1 NAME
 
 Module::Setup::Flavor::JJNAPIORK - How I use Module::Setup
 
@@ -49,18 +49,24 @@ template: |
 ---
 file: Makefile.PL
 template: |
-  use inc::Module::Install;
+  #!/usr/bin/env perl
+
+  use strict;
+  use warnings;
+  use inc::Module::Install 1.00;
   name '[% dist %]';
   all_from 'lib/[% module_unix_path %].pm';
   
-  # requires '';
-  
+  requires ''; ## Add project dependencies
+  test_requires 'Test::More';  
   tests 't/*.t';
-  author_tests 'xt';
   
-  test_requires 'Test::More';
+  readme_markdown_from_pod;
   auto_set_repository;
-  auto_include;
+  auto_set_homepage;
+  auto_manifest;
+  auto_license;
+  auto_install;
   WriteAll;
 ---
 file: MANIFEST.SKIP
@@ -68,6 +74,8 @@ template: |
   \bRCS\b
   \bCVS\b
   ^MANIFEST\.
+  ^MANIFEST\.SKIP$
+  ^MANIFEST\.bak$
   ^Makefile$
   ~$
   ^#
@@ -81,41 +89,14 @@ template: |
   ^t/perlcritic
   ^tools/
   \.svn/
-  ^[^/]+\.yaml$
-  ^[^/]+\.pl$
   ^\.shipit$
   ^\.git/
+  ^\.gitignore
+  ^\.gitmodules
   \.sw[po]$
----
-file: README
-template: |
-  This is Perl module [% module %].
-  
-  INSTALLATION
-  
-  [% module %] installation is straightforward. If your CPAN shell is set up,
-  you should just be able to do
-  
-      % cpan [% module %]
-  
-  Download it, unpack it, then build it as per the usual:
-  
-      % perl Makefile.PL
-      % make && make test
-  
-  Then install it:
-  
-      % make install
-  
-  DOCUMENTATION
-  
-  [% module %] documentation is available as in POD. So you can do:
-  
-      % perldoc [% module %]
-  
-  to read the documentation online with your favorite pager.
-  
-  [% config.author %]
+  \.DS_Store$
+  ^core$
+  ^out$
 ---
 file: lib/____var-module_path-var____.pm
 template: |
@@ -129,7 +110,7 @@ template: |
   
   =head1 NAME
   
-  [% module %] -
+  [% module %] - My Brand New Module
   
   =head1 SYNOPSIS
   
@@ -137,7 +118,7 @@ template: |
   
   =head1 DESCRIPTION
   
-  [% module %] is
+  [% module %] is ...
   
   =head1 AUTHOR
   
@@ -145,55 +126,21 @@ template: |
   
   =head1 SEE ALSO
   
-  =head1 LICENSE
+  =head1 COPYRIGHT & LICENSE
+
+  Copyright [% ( (localtime(time))[5]+1900 ) %], John Napiorkowski
   
   This library is free software; you can redistribute it and/or modify
   it under the same terms as Perl itself.
   
   =cut
 ---
-file: t/00_compile.t
+file: t/use.t
 template: |
   use strict;
   use Test::More tests => 1;
   
   BEGIN { use_ok '[% module %]' }
----
-file: xt/01_podspell.t
-template: |
-  use Test::More;
-  eval q{ use Test::Spelling };
-  plan skip_all => "Test::Spelling is not installed." if $@;
-  add_stopwords(map { split /[\s\:\-]/ } <DATA>);
-  $ENV{LANG} = 'C';
-  all_pod_files_spelling_ok('lib');
-  __DATA__
-  [% config.author %]
-  [% config.email %]
-  [% module %]
----
-file: xt/02_perlcritic.t
-template: |
-  use strict;
-  use Test::More;
-  eval {
-      require Test::Perl::Critic;
-      Test::Perl::Critic->import( -profile => 'xt/perlcriticrc');
-  };
-  plan skip_all => "Test::Perl::Critic is not installed." if $@;
-  all_critic_ok('lib');
----
-file: xt/03_pod.t
-template: |
-  use Test::More;
-  eval "use Test::Pod 1.00";
-  plan skip_all => "Test::Pod 1.00 required for testing POD" if $@;
-  all_pod_files_ok();
----
-file: xt/perlcriticrc
-template: |
-  [TestingAndDebugging::ProhibitNoStrict]
-  allow=refs
 ---
 config:
   author: John Napiorkowski

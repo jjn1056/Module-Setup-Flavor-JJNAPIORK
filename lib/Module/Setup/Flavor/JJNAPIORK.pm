@@ -1,6 +1,7 @@
 package Module::Setup::Flavor::JJNAPIORK;
 use base 'Module::Setup::Flavor';
 
+use 5.008008;
 use strict;
 use warnings;
 
@@ -101,8 +102,11 @@ template: |
 file: lib/____var-module_path-var____.pm
 template: |
   package [% module %];
+
+  use 5.008008;
   use strict;
   use warnings;
+
   our $VERSION = '0.01';
   
   1;

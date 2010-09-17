@@ -15,7 +15,7 @@ Module::Setup::Flavor::JJNAPIORK - How I use Module::Setup
 
 =head1 SYNOPSIS
 
-    module-setup App::My::New::Project JJNAPIORK
+    module-setup  --direct --flavor-class=JJNAPIORK MyApp 
 
 =head1 DESCRIPTION
 
@@ -39,7 +39,6 @@ the same terms as Perl itself.
 =cut
 
 __DATA__
-
 ---
 file: Changes
 template: |
@@ -132,7 +131,7 @@ template: |
   
   =head1 COPYRIGHT & LICENSE
 
-  Copyright [% ( (localtime(time))[5]+1900 ) %], John Napiorkowski
+  Copyright 2010, John Napiorkowski
   
   This library is free software; you can redistribute it and/or modify
   it under the same terms as Perl itself.
@@ -155,7 +154,6 @@ config:
     - Template
     - Test::Makefile
     - Additional
-    - VC::SVN
     - VC::Git
 
 

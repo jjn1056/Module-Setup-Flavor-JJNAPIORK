@@ -4,7 +4,7 @@ Module::Setup::Flavor::JJNAPIORK - How I use Module::Setup
 
 # SYNOPSIS
 
-    module-setup  --direct --flavor-class=JJNAPIORK MyApp 
+    module-setup --flavor-class=JJNAPIORK MyApp
 
 # DESCRIPTION
 

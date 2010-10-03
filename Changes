@@ -1,4 +1,7 @@
 Revision history for Perl extension Module::Setup::Flavor::JJNAPIORK
 
+0.02    03 October 2010
+        - minor documentation changes and Makefile.PL tweaks
+
 0.01    17 September 2010
         - original version

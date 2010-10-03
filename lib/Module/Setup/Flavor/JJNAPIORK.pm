@@ -15,7 +15,7 @@ Module::Setup::Flavor::JJNAPIORK - How I use Module::Setup
 
 =head1 SYNOPSIS
 
-    module-setup  --direct --flavor-class=JJNAPIORK MyApp 
+    module-setup --flavor-class=JJNAPIORK MyApp
 
 =head1 DESCRIPTION
 
@@ -59,7 +59,6 @@ template: |
   
   requires ''; ## Add project dependencies
   test_requires 'Test::More';  
-  tests 't/*.t';
   
   readme_markdown_from_pod;
   auto_set_repository;
@@ -109,6 +108,7 @@ template: |
   our $VERSION = '0.01';
   
   1;
+
   __END__
   
   =head1 NAME
@@ -125,7 +125,7 @@ template: |
   
   =head1 AUTHOR
   
-  [% config.author %] E<lt>[% config.email %]E<gt>
+  [% config.author %] L<email:[% config.email %]>
   
   =head1 SEE ALSO
   

@@ -3,7 +3,7 @@ use base 'Module::Setup::Flavor';
 
 use 5.008008;
 use strict;
-use warnings;
+use warnings FATAL => 'all';
 
 our $VERSION = '0.03';
 

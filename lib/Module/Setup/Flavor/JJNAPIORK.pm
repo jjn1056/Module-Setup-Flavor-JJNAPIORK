@@ -52,50 +52,17 @@ template: |
   #!/usr/bin/env perl
 
   use strict;
-  use warnings;
+  use warnings FATAL =>'all';
   use inc::Module::Install 1.00;
-  name '[% dist %]';
   all_from 'lib/[% module_unix_path %].pm';
   
   requires ''; ## Add project dependencies
-  test_requires 'Test::More';  
-  
-  readme_markdown_from_pod;
-  auto_set_repository;
-  auto_set_homepage;
-  auto_manifest;
-  auto_license;
-  auto_install;
+  test_requires 'Test::More' => '0.96';
+
+  require 'maint/Makefile.PL.include'
+    if $Module::Install::AUTHOR;
+
   WriteAll;
----
-file: MANIFEST.SKIP
-template: |
-  \bRCS\b
-  \bCVS\b
-  ^MANIFEST\.
-  ^MANIFEST\.SKIP$
-  ^MANIFEST\.bak$
-  ^Makefile$
-  ~$
-  ^#
-  \.old$
-  ^blib/
-  ^pm_to_blib
-  ^MakeMaker-\d
-  \.gz$
-  \.cvsignore
-  ^t/9\d_.*\.t
-  ^t/perlcritic
-  ^tools/
-  \.svn/
-  ^\.shipit$
-  ^\.git/
-  ^\.gitignore
-  ^\.gitmodules
-  \.sw[po]$
-  \.DS_Store$
-  ^core$
-  ^out$
 ---
 file: lib/____var-module_path-var____.pm
 template: |
@@ -103,14 +70,12 @@ template: |
 
   use 5.008008;
   use strict;
-  use warnings;
+  use warnings FATAL =>'all';
 
   our $VERSION = '0.01';
   
   1;
 
-  __END__
-  
   =head1 NAME
   
   [% module %] - My Brand New Module
@@ -128,19 +93,70 @@ template: |
   [% config.author %] L<email:[% config.email %]>
   
   =head1 SEE ALSO
+
+      TBD
   
   =head1 COPYRIGHT & LICENSE
 
-  Copyright 2010, John Napiorkowski
+  Copyright 2011, John Napiorkowski
   
   This library is free software; you can redistribute it and/or modify
   it under the same terms as Perl itself.
   
   =cut
 ---
+file: maint/Makefile.PL.include
+template: |
+  BEGIN {
+    my @modules = qw(
+      ReadmeMarkdownFromPod
+  	  ManifestSkip
+  	  AutoLicense
+  	  Repository
+      Homepage
+  	  AutoManifest
+    );
+    for my $module (@modules) {
+      eval "use Module::Install::$module; 1"
+  	  || die <<"ERR";
+  
+  You are in author mode but are missing Module::Install::$module
+  
+  You are getting an error message because you are in author mode and are missing
+  some author only dependencies.  You should only see this message if you have 
+  checked this code out from a repository.  If you are just trying to install
+  the code please use the CPAN version.  If you are an author you will need to
+  install the missing modules, or you can bootstrap all the requirements using
+  Task::BeLike::JJNAPIORK with:
+  
+    cpanm Task::BeLike::JJNAPIORK
+  
+  If you think you are seeing this this message in error, please report it as a
+  bug to the author.
+  
+  ERR
+    }
+  }
+  
+  readme_markdown_from_pod;
+  manifest_skip;
+  auto_license;
+  auto_set_repository;
+  auto_set_homepage;
+  auto_manifest;
+  auto_install;
+  
+  postamble <<"EOP";
+  distclean :: manifest_skip_clean
+  
+  manifest_skip_clean:
+  \t\$(RM_F) MANIFEST.SKIP
+  EOP
+---
 file: t/use.t
 template: |
   use strict;
+  use warnings FATAL =>'all';
   use Test::More tests => 1;
   
   BEGIN { use_ok '[% module %]' }
@@ -155,6 +171,5 @@ config:
     - Test::Makefile
     - Additional
     - VC::Git
-
 
 

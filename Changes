@@ -1,5 +1,8 @@
 Revision history for Perl extension Module::Setup::Flavor::JJNAPIORK
 
+0.04    30 December 2010
+        - Decrease minimum required Perl version to 5.8.5
+
 0.03    20 December 2010
         - documentation updates
         - changes to reflect new Makefile layouts and cleaner seperation of

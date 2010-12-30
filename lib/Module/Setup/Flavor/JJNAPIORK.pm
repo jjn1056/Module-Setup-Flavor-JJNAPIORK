@@ -1,11 +1,11 @@
 package Module::Setup::Flavor::JJNAPIORK;
 use base 'Module::Setup::Flavor';
 
-use 5.008008;
+use 5.008005;
 use strict;
 use warnings FATAL => 'all';
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 1;
 
@@ -110,11 +110,11 @@ template: |
   BEGIN {
     my @modules = qw(
       ReadmeMarkdownFromPod
-  	  ManifestSkip
-  	  AutoLicense
-  	  Repository
+      ManifestSkip
+      AutoLicense
+      Repository
       Homepage
-  	  AutoManifest
+      AutoManifest
     );
     for my $module (@modules) {
       eval "use Module::Install::$module; 1"

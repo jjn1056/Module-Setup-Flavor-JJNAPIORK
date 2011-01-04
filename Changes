@@ -3,6 +3,10 @@ Revision history for Perl extension Module::Setup::Flavor::JJNAPIORK
 0.05    04 January 2011
         - Updated copyright year code
         - make it so the /maint is not included when building the dist
+        - cut down on the dependency list a bit
+        - testing out some new author side make stuff
+        - actually name the MI dependencies so that you can use this without
+          needing Task::BeLike::JJNAPIORK
 
 0.04    30 December 2010
         - Decrease minimum required Perl version to 5.8.5

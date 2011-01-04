@@ -5,7 +5,7 @@ use 5.008005;
 use strict;
 use warnings FATAL => 'all';
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 1;
 
@@ -31,7 +31,7 @@ John Napiorkowski C< <<jjnapiork@cpan.org>> >
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2010, John Napiorkowski
+Copyright 2011, John Napiorkowski
 
 This program is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.
@@ -98,7 +98,7 @@ template: |
   
   =head1 COPYRIGHT & LICENSE
 
-  Copyright 2011, John Napiorkowski
+  Copyright [% (localtime(time))[5]+1900 %], [% config.author %] L<email:[% config.email %]> 
   
   This library is free software; you can redistribute it and/or modify
   it under the same terms as Perl itself.

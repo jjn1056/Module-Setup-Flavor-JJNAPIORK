@@ -53,6 +53,7 @@ sub manifest_include {
 
 manifest_include(
   'lib' => '.pm',
+  'inc' => '.pm',
   't' => '.t',
   't/lib' => '.pm',
   'xt' => '.t',

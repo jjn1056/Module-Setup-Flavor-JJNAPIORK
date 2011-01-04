@@ -162,6 +162,7 @@ template: |
 
   manifest_include(
     'lib' => '.pm',
+    'inc' => '.pm',
     't' => '.t',
     't/lib' => '.pm',
     'xt' => '.t',

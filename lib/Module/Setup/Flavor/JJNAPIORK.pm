@@ -98,7 +98,7 @@ template: |
   
   =head1 COPYRIGHT & LICENSE
 
-  Copyright [% (localtime(time))[5]+1900 %], [% config.author %] L<email:[% config.email %]> 
+  Copyright 2011, [% config.author %] L<email:[% config.email %]> 
   
   This library is free software; you can redistribute it and/or modify
   it under the same terms as Perl itself.

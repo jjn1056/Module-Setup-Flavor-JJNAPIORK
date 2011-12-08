@@ -5,7 +5,7 @@ use 5.008005;
 use strict;
 use warnings FATAL => 'all';
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 1;
 
@@ -43,7 +43,7 @@ __DATA__
 file: Changes
 template: |
   Revision history for Perl extension [% module %]
-  
+
   0.01    [% localtime %]
           - original version
 ---
@@ -55,7 +55,7 @@ template: |
   use warnings FATAL =>'all';
   use inc::Module::Install 1.00;
   all_from 'lib/[% module_unix_path %].pm';
-  
+
   requires ''; ## Add your project dependencies
   test_requires 'Test::Most';
 
@@ -73,36 +73,36 @@ template: |
   use warnings FATAL =>'all';
 
   our $VERSION = '0.01';
-  
+
   1;
 
   =head1 NAME
-  
+
   [% module %] - My Brand New Module
-  
+
   =head1 SYNOPSIS
-  
+
     use [% module %];
-  
+
   =head1 DESCRIPTION
-  
+
   [% module %] is ...
-  
+
   =head1 AUTHOR
-  
+
   [% config.author %] L<email:[% config.email %]>
-  
+
   =head1 SEE ALSO
 
       TBD
-  
+
   =head1 COPYRIGHT & LICENSE
 
-  Copyright 2011, [% config.author %] L<email:[% config.email %]> 
-  
+  Copyright 2011, [% config.author %] L<email:[% config.email %]>
+
   This library is free software; you can redistribute it and/or modify
   it under the same terms as Perl itself.
-  
+
   =cut
 ---
 file: maint/Makefile.PL.include
@@ -118,12 +118,12 @@ template: |
   for my $module (@modules) {
     $module = $module =~/^\:\:/ ? "Module::Install$module" : $module;
     eval "use $module; 1"
-	  || die <<"ERR";
+      || die <<"ERR";
 
   You are in author mode but are missing $module
 
   You are getting an error message because you are in author mode and are missing
-  some author only dependencies.  You should only see this message if you have 
+  some author only dependencies.  You should only see this message if you have
   checked this code out from a repository.  If you are just trying to install
   the code please use the CPAN version.  If you are an author you will need to
   install the missing modules, or you can bootstrap all the requirements using
@@ -155,7 +155,7 @@ template: |
 file: t/use.t
 template: |
   use Test::Most tests => 1;
-  
+
   BEGIN { use_ok '[% module %]' }
 ---
 config:

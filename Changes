@@ -1,5 +1,9 @@
 Revision history for Perl extension Module::Setup::Flavor::JJNAPIORK
 
+0.06    08 December 2011
+        - Fixed up the Makefile and maint stuff to use more modern version
+        - tweaked the generated templates a bit
+
 0.05    04 January 2011
         - Updated copyright year code
         - make it so the /maint is not included when building the dist

@@ -5,7 +5,7 @@ use 5.008005;
 use strict;
 use warnings FATAL => 'all';
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 1;
 
@@ -56,8 +56,8 @@ template: |
   use inc::Module::Install 1.00;
   all_from 'lib/[% module_unix_path %].pm';
   
-  requires ''; ## Add project dependencies
-  test_requires 'Test::More' => '0.96';
+  requires ''; ## Add your project dependencies
+  test_requires 'Test::Most';
 
   require 'maint/Makefile.PL.include'
     unless -e 'META.yml';
@@ -109,16 +109,18 @@ file: maint/Makefile.PL.include
 template: |
   BEGIN {
     my @modules = qw(
-      ReadmeMarkdownFromPod
-      AutoLicense
-      Repository
-      Homepage
+      ::ReadmeMarkdownFromPod
+      ::ManifestSkip
+      ::Repository
+      ::Homepage
+      ::AutoManifest
     );
-    for my $module (@modules) {
-      eval "use Module::Install::$module; 1"
-  	  || die <<"ERR";
+  for my $module (@modules) {
+    $module = $module =~/^\:\:/ ? "Module::Install$module" : $module;
+    eval "use $module; 1"
+	  || die <<"ERR";
 
-  You are in author mode but are missing Module::Install::$module
+  You are in author mode but are missing $module
 
   You are getting an error message because you are in author mode and are missing
   some author only dependencies.  You should only see this message if you have 
@@ -137,48 +139,14 @@ template: |
   }
 
   readme_markdown_from_pod;
-  auto_license;
+  manifest_skip;
   auto_set_repository;
   auto_set_homepage;
+  auto_manifest;
   auto_install;
 
-  sub manifest_include {
-    my @files = @_;
-    my @parts;
-    while (my ($dir, $spec) = splice(@files, 0, 2)) {
-      my $re = ($dir ? $dir.'/' : '').
-        ((ref($spec) eq 'Regexp')
-          ? $spec
-          : !ref($spec)
-            ? ".*\Q${spec}\E"
-            : die "spec must be string or regexp, was: ${spec} (${\ref $spec})");
-      push @parts, $re;
-    }
-    my $final = '^(?!'.join('|', map "${_}\$", @parts).')';
-    open(my $skip, '>', 'MANIFEST.SKIP') or die "trouble $!";
-    print $skip "${final}\n";
-    close $skip;
-  }
-
-  manifest_include(
-    'lib' => '.pm',
-    'inc' => '.pm',
-    't' => '.t',
-    't/lib' => '.pm',
-    'xt' => '.t',
-    'xt/lib' => '.pm',
-    'script' => qr{.pl|.psgi},
-    '' => qr{([^/]+).PL},
-    '' => qr{Changes|MANIFEST|README|META\.yml},
-  );
-
   postamble <<"EOP";
-  create_distdir: manifest_clean manifest
-
-  distclean :: manifest_clean manifest_skip_clean
-
-  manifest_clean:
-  \t\$(RM_F) MANIFEST
+  distclean :: manifest_skip_clean
 
   manifest_skip_clean:
   \t\$(RM_F) MANIFEST.SKIP
@@ -186,9 +154,7 @@ template: |
 ---
 file: t/use.t
 template: |
-  use strict;
-  use warnings FATAL =>'all';
-  use Test::More tests => 1;
+  use Test::Most tests => 1;
   
   BEGIN { use_ok '[% module %]' }
 ---
